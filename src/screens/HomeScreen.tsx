@@ -10,14 +10,13 @@ const HomeScreen = () => {
 
   return (
     <View className="flex-1 justify-center items-center">
-      <Text>Living room</Text>
-      {data
-       && (
+      <Text className="text-5xl mb-10">Living room</Text>
+      {data && (
         <>
-          <Text>Temperature: {data.temp} C</Text>
-          <Text>Humidity: {data.humidity}%</Text>
-          <Text>Pressure: {data.pressure} hPa</Text>
-          <Text>GAS: {data.gas}</Text>
+          <Text className="text-2xl mb-1">Temperature: {data.temp} C</Text>
+          <Text className="text-2xl mb-1">Humidity: {data.humidity}%</Text>
+          <Text className="text-2xl mb-1">Pressure: {data.pressure} hPa</Text>
+          <Text className="text-2xl mb-">GAS: {data.gas}</Text>
         </>
       )}
       {/* <Button title="Living" onPress={() => setRoom(Rooms.LIVING_ROOM)} />
