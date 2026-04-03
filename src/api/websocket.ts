@@ -20,6 +20,6 @@ export const subscribe = (subscriber: MessageHandler) => {
   };
 };
 
-export const send = (payload: MessageHandler) => {
+export const send = (payload: unknown) => {
   socket?.send(JSON.stringify(payload));
 };
