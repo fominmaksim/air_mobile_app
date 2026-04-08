@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import styled from 'styled-components/native';
 import { useSensorStore } from '../store/sensor.store';
 import { useSensorRealtime } from '../hooks/useSensorRealtime';
 import MainInformationCard from '../components/MainInformationCard';
@@ -11,35 +11,58 @@ const HomeScreen = () => {
   useSensorRealtime();
 
   return (
-    <View className="flex-1 bg-[#e3d1c4a2] pt-[80] pl-[20] pr-[20] pb-[20]">
-      <Text className="text-5xl mb-10">Living room</Text>
-      <View className="flex-row">
+    <Container>
+      <Title>Living room</Title>
+      <Row>
         <MainInformationCard data={data} />
-      </View>
-      <View className="flex-row gap-[1rem] mt-[2rem]">
+      </Row>
+      <SpacedRow>
         <SmallInformationCardButton
           data={data?.temp}
           text="Temperature"
           selected
         />
         <SmallInformationCardButton data={data?.humidity} text="Humidity" />
-      </View>
-      <View className="flex-row gap-[1rem] mt-[2rem]">
+      </SpacedRow>
+      <SpacedRow>
         <SmallInformationCardButton data={data?.pressure} text="Pressure" />
         <SmallInformationCardButton data={data?.gas} text="Gas" />
-      </View>
+      </SpacedRow>
       {/* {data && (
-        <View className="text-left">
-          <Text className="text-2xl mb-1">Temperature: {data.temp} C</Text>
-          <Text className="text-2xl mb-1">Humidity: {data.humidity}%</Text>
-          <Text className="text-2xl mb-1">Pressure: {data.pressure} hPa</Text>
-          <Text className="text-2xl mb-">GAS: {data.gas}</Text>
-        </View>
+        <Row>
+          <Title>Temperature: {data.temp} C</Title>
+          <Title>Humidity: {data.humidity}%</Title>
+          <Title>Pressure: {data.pressure} hPa</Title>
+          <Title>GAS: {data.gas}</Title>
+        </Row>
       )} */}
       {/* <Button title="Living" onPress={() => setRoom(Rooms.LIVING_ROOM)} />
       <Button title="Bedroom" onPress={() => setRoom(Rooms.BEDROOM)} /> */}
-    </View>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  background-color: rgba(227, 209, 196, 0.64);
+  padding-top: 80px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+`;
+
+const Title = styled.Text`
+  font-size: 48px;
+  margin-bottom: 40px;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+`;
+
+const SpacedRow = styled(Row)`
+  gap: 16px;
+  margin-top: 32px;
+`;
 
 export default HomeScreen;

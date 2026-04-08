@@ -1,37 +1,7 @@
-import { StyleSheet, Text, View } from 'react-native';
+import styled from 'styled-components/native';
 
 const BG_MAIN = '#A2ADC0';
 const BG_DEFAULT = '#E4DBD4';
-
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    height: 180,
-    borderRadius: 30,
-    padding: 25,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5.62,
-    elevation: 7,
-  },
-  tempRow: {
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  tempValue: {
-    fontSize: 40,
-    fontWeight: '400',
-  },
-  label: {
-    marginTop: 8,
-    fontSize: 16,
-    fontWeight: '500',
-  },
-});
 
 type SmallInformationCardButtonProps = {
   data?: number | null;
@@ -45,16 +15,47 @@ const SmallInformationCardButton = ({
   selected,
 }: SmallInformationCardButtonProps) => {
   return (
-    <View
-      style={[styles.card, { backgroundColor: selected ? BG_MAIN : BG_DEFAULT }]}>
-      <View style={styles.tempRow}>
-        <Text style={styles.tempValue}>{data ?? '—'}</Text>
-      </View>
+    <Card $selected={selected}>
+      <TemperatureRow>
+        <TemperatureValue>{data ?? '—'}</TemperatureValue>
+      </TemperatureRow>
       {text != null && text !== '' ? (
-        <Text style={styles.label}>{text}</Text>
+        <Label>{text}</Label>
       ) : null}
-    </View>
+    </Card>
   );
 };
+
+const Card = styled.View<{ $selected?: boolean }>`
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 180px;
+  border-radius: 30px;
+  padding: 25px;
+  background-color: ${({ $selected }) => ($selected ? BG_MAIN : BG_DEFAULT)};
+  shadow-color: #000000;
+  shadow-offset: 0px 5px;
+  shadow-opacity: 0.2;
+  shadow-radius: 5.62px;
+  elevation: 7;
+`;
+
+const TemperatureRow = styled.View`
+  flex-direction: row;
+  align-items: baseline;
+`;
+
+const TemperatureValue = styled.Text`
+  font-size: 40px;
+  font-weight: 400;
+`;
+
+const Label = styled.Text`
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 500;
+`;
 
 export default SmallInformationCardButton;

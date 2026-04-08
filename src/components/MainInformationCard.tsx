@@ -1,49 +1,50 @@
-import { StyleSheet, Text, View } from 'react-native';
-
-const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    backgroundColor: "#A2ADC0",
-    borderRadius: 30,
-    padding: 25,
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5.62,
-    elevation: 7,
-  },
-  tempRow: {
-    flexDirection: "row",
-    alignItems: "baseline",
-  },
-  tempValue: {
-    fontSize: 40,
-    fontWeight: "700",
-  },
-
-  celsius: {
-    fontSize: 30,
-    fontWeight: "600",
-    marginLeft: 2,
-  },
-});
+import styled from 'styled-components/native';
 
 type InformationCardProps = {
   data?: { temp?: number } | null;
 };
 
 const MainInformationCard = ({ data }: InformationCardProps) => {
-
-  const remp = data?.temp?.toFixed(1)
+  const remp = data?.temp?.toFixed(1);
   return (
-    <View style={styles.card}>
-      <View style={styles.tempRow}>
-        <Text style={styles.tempValue}>{remp ?? '—'}</Text>
-        <Text style={styles.celsius}>{'\u00B0C'}</Text>
-      </View>
-      <View />
-    </View>
+    <Card>
+      <TemperatureRow>
+        <TemperatureValue>{remp ?? '—'}</TemperatureValue>
+        <Celsius>{'\u00B0C'}</Celsius>
+      </TemperatureRow>
+      <Spacer />
+    </Card>
   );
 };
+
+const Card = styled.View`
+  flex: 1;
+  background-color: #a2adc0;
+  border-radius: 30px;
+  padding: 25px;
+  shadow-color: #000000;
+  shadow-offset: 0px 5px;
+  shadow-opacity: 0.2;
+  shadow-radius: 5.62px;
+  elevation: 7;
+`;
+
+const TemperatureRow = styled.View`
+  flex-direction: row;
+  align-items: baseline;
+`;
+
+const TemperatureValue = styled.Text`
+  font-size: 40px;
+  font-weight: 700;
+`;
+
+const Celsius = styled.Text`
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 2px;
+`;
+
+const Spacer = styled.View``;
 
 export default MainInformationCard;
