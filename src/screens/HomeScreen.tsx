@@ -21,23 +21,22 @@ const HomeScreen = () => {
           data={data?.temp}
           text="Temperature"
           selected
+          symbol={`${'\u00B0'}C`}
         />
-        <SmallInformationCardButton data={data?.humidity} text="Humidity" />
+        <SmallInformationCardButton
+          data={data?.humidity}
+          text="Humidity"
+          symbol='%'
+        />
       </SpacedRow>
       <SpacedRow>
-        <SmallInformationCardButton data={data?.pressure} text="Pressure" />
+        <SmallInformationCardButton
+          data={data?.pressure}
+          text="Pressure"
+          symbol='hPa'
+        />
         <SmallInformationCardButton data={data?.gas} text="Gas" />
       </SpacedRow>
-      {/* {data && (
-        <Row>
-          <Title>Temperature: {data.temp} C</Title>
-          <Title>Humidity: {data.humidity}%</Title>
-          <Title>Pressure: {data.pressure} hPa</Title>
-          <Title>GAS: {data.gas}</Title>
-        </Row>
-      )} */}
-      {/* <Button title="Living" onPress={() => setRoom(Rooms.LIVING_ROOM)} />
-      <Button title="Bedroom" onPress={() => setRoom(Rooms.BEDROOM)} /> */}
     </Container>
   );
 };

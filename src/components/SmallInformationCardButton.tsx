@@ -7,21 +7,22 @@ type SmallInformationCardButtonProps = {
   data?: number | null;
   text?: string;
   selected?: boolean;
+  symbol?: string;
 };
 
 const SmallInformationCardButton = ({
   data,
   text,
   selected,
+  symbol,
 }: SmallInformationCardButtonProps) => {
   return (
     <Card $selected={selected}>
       <TemperatureRow>
         <TemperatureValue>{data ?? '—'}</TemperatureValue>
+        <Celsius>{symbol}</Celsius>
       </TemperatureRow>
-      {text != null && text !== '' ? (
-        <Label>{text}</Label>
-      ) : null}
+      {text != null && text !== '' ? <Label>{text}</Label> : null}
     </Card>
   );
 };
@@ -56,6 +57,12 @@ const Label = styled.Text`
   margin-top: 8px;
   font-size: 16px;
   font-weight: 500;
+`;
+
+const Celsius = styled.Text`
+  font-size: 20px;
+  font-weight: 600;
+  margin-left: 2px;
 `;
 
 export default SmallInformationCardButton;
