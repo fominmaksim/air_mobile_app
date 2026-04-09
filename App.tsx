@@ -1,17 +1,35 @@
-import './global.css';
 import { StatusBar, useColorScheme } from 'react-native';
+import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
 import { connectWS } from './src/api/websocket';
+import Toast from 'react-native-toast-message';
+import { AppState } from 'react-native';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
-  connectWS();
+
+  useEffect(() => {
+    connectWS();
+    const appStateSubscription = AppState.addEventListener(
+      'change',
+      nextState => {
+        if (nextState === 'active') {
+          connectWS();
+        }
+      }
+    );
+
+    return () => {
+      appStateSubscription.remove();
+    };
+  }, []);
 
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <HomeScreen />
+      <Toast topOffset={50} bottomOffset={40} />
     </SafeAreaProvider>
   );
 }

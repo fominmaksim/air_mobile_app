@@ -2,6 +2,7 @@
 <network-security-config>
     <!-- Release builds set usesCleartextTraffic=false; ws:// is cleartext and is blocked unless allowed here. -->
     <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">10.220.167.183</domain>
         <domain includeSubdomains="false">192.168.0.24</domain>
         <domain includeSubdomains="false">localhost</domain>
         <domain includeSubdomains="false">10.0.2.2</domain>
