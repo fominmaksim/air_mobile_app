@@ -1,26 +1,28 @@
 import styled from 'styled-components/native';
 
-const BG_MAIN = '#A2ADC0';
-const BG_DEFAULT = '#E4DBD4';
+const BG_MAIN = '#5d689a';
+// const BG_MAIN = '#443F57';
+const BG_DEFAULT = '#AAAED3';
+// const BG_DEFAULT = '#AB8FA1';
 
 type SmallInformationCardButtonProps = {
   data?: number | null;
   text?: string;
   selected?: boolean;
-  symbol?: string;
+  name?: string;
 };
 
 const SmallInformationCardButton = ({
   data,
   text,
   selected,
-  symbol,
+  name,
 }: SmallInformationCardButtonProps) => {
   return (
     <Card $selected={selected}>
       <TemperatureRow>
-        <TemperatureValue>{data ?? '—'}</TemperatureValue>
-        <Celsius>{symbol}</Celsius>
+        <MainValue>{data?.toFixed(1) ?? '—'}</MainValue>
+        <Name>{name}</Name>
       </TemperatureRow>
       {text != null && text !== '' ? <Label>{text}</Label> : null}
     </Card>
@@ -40,7 +42,7 @@ const Card = styled.View<{ $selected?: boolean }>`
   shadow-offset: 0px 5px;
   shadow-opacity: 0.2;
   shadow-radius: 5.62px;
-  elevation: 7;
+  elevation: ${({ $selected }) => ($selected ? 7: 3)};
 `;
 
 const TemperatureRow = styled.View`
@@ -48,21 +50,27 @@ const TemperatureRow = styled.View`
   align-items: baseline;
 `;
 
-const TemperatureValue = styled.Text`
+const MainValue = styled.Text`
   font-size: 40px;
-  font-weight: 400;
+  font-weight: 500;
+  /* color: #e9d78d; */
+  color: #fff;
 `;
 
 const Label = styled.Text`
   margin-top: 8px;
   font-size: 16px;
   font-weight: 500;
+  color: #fff;
+  /* color: #e9d68d; */
 `;
 
-const Celsius = styled.Text`
+const Name = styled.Text`
   font-size: 20px;
   font-weight: 600;
   margin-left: 2px;
+  color: #fff;
+  /* color: #e9d68d; */
 `;
 
 export default SmallInformationCardButton;

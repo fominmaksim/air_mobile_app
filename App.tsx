@@ -1,4 +1,4 @@
-import { StatusBar, useColorScheme } from 'react-native';
+import { ScrollView, StatusBar, useColorScheme } from 'react-native';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
@@ -17,7 +17,7 @@ function App() {
         if (nextState === 'active') {
           connectWS();
         }
-      }
+      },
     );
 
     return () => {
@@ -27,8 +27,10 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <HomeScreen />
+      <ScrollView>
+        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+        <HomeScreen />
+      </ScrollView>
       <Toast topOffset={50} bottomOffset={40} />
     </SafeAreaProvider>
   );
