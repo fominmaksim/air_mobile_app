@@ -1,10 +1,11 @@
+
 import { create } from 'zustand';
-import { Rooms, SensorStore } from '../types';
+import { RoomsEnum, SensorReadings, SensorStore } from '../types';
 
 export const useSensorStore = create<SensorStore>(set => ({
-  room: Rooms.LIVING_ROOM,
-  data: null,
+  room: RoomsEnum.LIVING_ROOM,
+  sensor: undefined,
 
-  setRoom: (room: Rooms) => set({ room }),
-  setData: (data: any) => set({ data }),
+  setRoom: (room: RoomsEnum) => set({ room }),
+  setSensor: (sensor: SensorReadings) => set({ sensor }),
 }));

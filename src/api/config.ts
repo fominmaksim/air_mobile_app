@@ -1,0 +1,5 @@
+import Config from "react-native-config";
+
+export const API_BASE_URL = `http://${Config.API_BASE_URL}/api`;
+
+export const API_TIMEOUT_MS = 10000;
