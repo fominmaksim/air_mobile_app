@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Pressable } from 'react-native';
+import React from 'react';
 
 const BG_MAIN = '#5d689a';
 const BG_DEFAULT = '#AAAED3';

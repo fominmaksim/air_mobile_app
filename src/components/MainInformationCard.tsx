@@ -6,6 +6,7 @@ import {
   indoorFeelsLikeCelsius,
 } from '../utils/indoorFeelsLike';
 import { ChartData } from 'react-native-chart-kit/dist/HelperTypes';
+import React from 'react';
 
 type InformationCardProps = {
   selectedMainLiveValue?: number;

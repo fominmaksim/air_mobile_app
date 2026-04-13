@@ -5,6 +5,7 @@ import SmallInformationCardButton from '../components/SmallInformationCardButton
 import { DataTypeEnum } from '../types';
 import { useDisplaySelectedMeasurements } from '../hooks/useDislplaySelectedMeasurements';
 import { useMeasurements } from '../hooks/useMeasurements';
+import React from 'react';
 
 const HomeScreen = () => {
   const {
