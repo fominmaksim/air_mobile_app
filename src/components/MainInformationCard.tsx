@@ -1,37 +1,51 @@
-import { useState, type ComponentProps } from 'react';
+import { useState } from 'react';
 import { LineChart } from 'react-native-chart-kit';
 import styled from 'styled-components/native';
+import {
+  getComfortScore,
+  indoorFeelsLikeCelsius,
+} from '../utils/indoorFeelsLike';
+import { ChartData } from 'react-native-chart-kit/dist/HelperTypes';
+
 type InformationCardProps = {
-  data?: { temp?: number } | null;
-  stats: ComponentProps<typeof LineChart>['data'];
+  selectedMainLiveValue?: number;
+  data?: { temp?: number; humidity?: number } | null;
+  stats: ChartData;
 };
 
-const MainInformationCard = ({ data, stats }: InformationCardProps) => {
-  const remp = data?.temp?.toFixed(1);
+const MainInformationCard = ({
+  selectedMainLiveValue,
+  data,
+  stats,
+}: InformationCardProps) => {
+  const parsedSelectedMainLiveValue = selectedMainLiveValue?.toFixed(1);
+
+  const temp = data?.temp || 0;
+  const hum = data?.humidity || 0;
+  const feelsLike = indoorFeelsLikeCelsius(temp, hum);
+  const comfort = getComfortScore(temp, hum);
+
   const [chartWidth, setChartWidth] = useState(0);
-  console.log('screenWidth', chartWidth);
 
-  const newChartWidth = chartWidth - 25; // consider padding right 25px;
-
+  const newChartWidth = chartWidth - 25; // considering padding right 25px;
 
   return (
     <Card>
       <Header>
         <TemperatureRow>
-          {/* <MaterialCommunityIcons
-          name="arrow-top-left"
-          size={34}
-          color="#fff"
-        /> */}
-          <TemperatureValue>{remp ?? '—'}</TemperatureValue>
+          <TemperatureValue>
+            {parsedSelectedMainLiveValue ?? '—'}
+          </TemperatureValue>
           <Celsius>{'\u00B0C'}</Celsius>
         </TemperatureRow>
         <ExtraData>
           <FeelsLikeWrap>
             <ExtraDataRow>
-              <FeelsLikeText>Feels like: </FeelsLikeText>
+              <FeelsLikeText>Comfort score: </FeelsLikeText>
               <FeelsLikeText>
-                20.4{'\u00B0C'}
+                {feelsLike != null && comfort != null
+                  ? `${comfort.score} · ${comfort.label}`
+                  : '—'}
               </FeelsLikeText>
             </ExtraDataRow>
           </FeelsLikeWrap>
@@ -39,15 +53,11 @@ const MainInformationCard = ({ data, stats }: InformationCardProps) => {
           <MinMaxRow>
             <ExtraDataRow>
               <ExtraText>Min: </ExtraText>
-              <ExtraText>
-                19.4{'\u00B0C'}
-              </ExtraText>
+              <ExtraText>19.4{'\u00B0C'}</ExtraText>
             </ExtraDataRow>
             <ExtraDataRow>
               <ExtraText>Max: </ExtraText>
-              <ExtraText>
-                29.4{'\u00B0C'}
-              </ExtraText>
+              <ExtraText>29.4{'\u00B0C'}</ExtraText>
             </ExtraDataRow>
           </MinMaxRow>
         </ExtraData>
@@ -59,16 +69,18 @@ const MainInformationCard = ({ data, stats }: InformationCardProps) => {
           setChartWidth(w);
         }}
       >
-        <LineChart
-          data={stats}
-          width={newChartWidth}
-          height={160}
-          chartConfig={chartConfig}
-          bezier
-          withDots={false}
-          withInnerLines={false}
-          transparent
-        />
+        {newChartWidth && stats && (
+          <LineChart
+            data={stats}
+            width={newChartWidth}
+            height={160}
+            chartConfig={chartConfig}
+            bezier
+            withDots={false}
+            withInnerLines={false}
+            transparent
+          />
+        )}
       </ChartRow>
     </Card>
   );
@@ -76,10 +88,8 @@ const MainInformationCard = ({ data, stats }: InformationCardProps) => {
 
 const Card = styled.View`
   flex: 1;
-  /* background-color: #a2adc0; */
-  /* background-color: #443F57; */
   background-color: #5d689a;
-  border-radius: 40px;
+  border-radius: 30px;
   shadow-color: #000000;
   shadow-offset: 0px 5px;
   shadow-opacity: 0.2;
@@ -112,8 +122,6 @@ const TemperatureValue = styled.Text`
   font-weight: 700;
   color: rgb(242, 242, 242);
   text-shadow: 0px 1px 1px #1d1d1d2d;
-  /* color: #ffffffcc; */
-  /* color: #e9d68d; */
 `;
 
 const Celsius = styled.Text`
@@ -122,9 +130,6 @@ const Celsius = styled.Text`
   margin-left: 2px;
   color: rgb(242, 242, 242);
   text-shadow: 0px 1px 1px #1d1d1d2d;
-  /* color: rgba(255, 232, 215, 0.821); */
-  /* color: #ffffffcc; */
-  /* color: #e9d68d; */
 `;
 
 const Spacer = styled.View``;
@@ -165,33 +170,22 @@ const ExtraText = styled.Text`
   font-size: 12px;
   font-weight: 600;
   color: #ffffff;
-  /* color: rgba(255, 232, 215, 0.821); */
-  /* text-shadow: 0px 1px 1px #1d1d1d2d; */
 `;
 
 const FeelsLikeText = styled.Text`
   font-size: 12px;
   font-weight: 600;
   color: #ffffff;
-  /* color: rgba(255, 232, 215, 0.821); */
-  /* text-shadow: 0px 1px 1px #1d1d1d2d; */
 `;
 
 const chartConfig = {
-  // backgroundGradientFrom: '#1E2923',
-  // backgroundGradientFromOpacity: 0,
-  // backgroundGradientTo: '#08130D',
-  // backgroundGradientToOpacity: 0.5,
   backgroundColor: 'transparent',
-  // color: (_opacity = 1) => `rgb(255, 232, 215)`,
-  // labelColor: (_opacity = 1) => `rgb(255, 232, 215)`,
   color: (_opacity = 1) => `rgb(255, 255, 255)`,
   labelColor: (_opacity = 1) => `rgb(255, 255, 255)`,
-  strokeWidth: 4, // optional, default 3
-  // barPercentage: 0.5,
+  strokeWidth: 3,
   decimalPlaces: 1,
 
-  propsForLabels: { fontSize: 12, fontWeight: 500, fill: '#fff' }, 
+  propsForLabels: { fontSize: 12, fontWeight: 500, fill: '#fff' },
 };
 
 export default MainInformationCard;

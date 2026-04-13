@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
-import { useSensorStore } from '../store/sensor.store';
 import { subscribe } from '../api/websocket';
+import { useSensorStore } from '../store/sensor.store';
 
 export const useSensorRealtime = () => {
-    console.log('useSensorRealtime');
-  const setData = useSensorStore(store => store.setData);
+  const setSensor = useSensorStore(store => store.setSensor);
   const room = useSensorStore(store => store.setRoom);
 
   useEffect(() => {
-    const unsub = subscribe(setData);
-    // send();
+    const unsub = subscribe(setSensor);
+
     return unsub;
-  }, [room, setData]);
+  }, [room, setSensor]);
 };

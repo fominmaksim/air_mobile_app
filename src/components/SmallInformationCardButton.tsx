@@ -1,42 +1,58 @@
 import styled from 'styled-components/native';
+import { Pressable } from 'react-native';
 
 const BG_MAIN = '#5d689a';
-// const BG_MAIN = '#443F57';
 const BG_DEFAULT = '#AAAED3';
-// const BG_DEFAULT = '#AB8FA1';
 
 type SmallInformationCardButtonProps = {
   data?: number | null;
-  text?: string;
-  selected?: boolean;
   name?: string;
+  selected?: boolean;
+  unit?: string;
+  onPress: () => void;
 };
 
 const SmallInformationCardButton = ({
   data,
-  text,
-  selected,
   name,
+  selected,
+  unit,
+  onPress,
 }: SmallInformationCardButtonProps) => {
   return (
-    <Card $selected={selected}>
-      <TemperatureRow>
-        <MainValue>{data?.toFixed(1) ?? '—'}</MainValue>
-        <Name>{name}</Name>
-      </TemperatureRow>
-      {text != null && text !== '' ? <Label>{text}</Label> : null}
+    <Card $selected={selected} onPress={onPress}>
+      <TemperatureSection>
+        {name != null && name !== '' ? <Label>{name}</Label> : null}
+        <TemperatureRow>
+          <MainValue>{data?.toFixed(1) ?? '—'}</MainValue>
+          <Name>{unit}</Name>
+        </TemperatureRow>
+      </TemperatureSection>
+      {/* <AnimatedCircularProgress
+        rotation={270}
+        // lineCap='square'
+        arcSweepAngle={180}
+        size={60}
+        width={5}
+        fill={100}
+        tintColor="#00e0ff"
+        onAnimationComplete={() => console.log('onAnimationComplete')}
+        backgroundColor="#3d5875"
+      /> */}
     </Card>
   );
 };
 
-const Card = styled.View<{ $selected?: boolean }>`
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+const Card = styled(Pressable)<{ $selected?: boolean }>`
+
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+
   flex: 1;
-  height: 180px;
-  border-radius: 30px;
-  padding: 25px;
+
+  border-radius: 20px;
+  padding: 15px 25px;
   background-color: ${({ $selected }) => ($selected ? BG_MAIN : BG_DEFAULT)};
   shadow-color: #000000;
   shadow-offset: 0px 5px;
@@ -51,18 +67,15 @@ const TemperatureRow = styled.View`
 `;
 
 const MainValue = styled.Text`
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 500;
-  /* color: #e9d78d; */
   color: #fff;
 `;
 
 const Label = styled.Text`
-  margin-top: 8px;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500;
   color: #fff;
-  /* color: #e9d68d; */
 `;
 
 const Name = styled.Text`
@@ -70,7 +83,10 @@ const Name = styled.Text`
   font-weight: 600;
   margin-left: 2px;
   color: #fff;
-  /* color: #e9d68d; */
 `;
+
+const TemperatureSection = styled.View`
+  
+`
 
 export default SmallInformationCardButton;

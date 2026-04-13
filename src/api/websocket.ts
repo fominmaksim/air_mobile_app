@@ -1,7 +1,11 @@
 import Toast from 'react-native-toast-message';
 import { MessageHandler } from '../types';
+import Config from 'react-native-config';
 
-const WS_URLS = ['ws://10.220.167.183:3000/ws', 'ws://192.168.0.24:3000/ws'];
+const WS_URLS = [
+
+  `ws://${Config.API_BASE_URL}/ws`,
+];
 const RETRY_BASE_DELAY_MS = 1000;
 const RETRY_MAX_DELAY_MS = 10000;
 let socket: WebSocket | null = null;
