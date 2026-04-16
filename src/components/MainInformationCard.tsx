@@ -88,7 +88,7 @@ const MainInformationCard = ({
 };
 
 const Card = styled.View`
-  flex: 1;
+  /* flex: 1; */
   background-color: #5d689a;
   border-radius: 30px;
   shadow-color: #000000;

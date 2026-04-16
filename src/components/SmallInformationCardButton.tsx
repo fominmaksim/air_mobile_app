@@ -50,7 +50,7 @@ const Card = styled(Pressable)<{ $selected?: boolean }>`
   display: flex;
   flex-direction: row;
 
-  flex: 1;
+  /* flex: 1; */
 
   border-radius: 20px;
   padding: 15px 25px;

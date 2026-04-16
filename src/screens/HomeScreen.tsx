@@ -6,6 +6,7 @@ import { DataTypeEnum } from '../types';
 import { useDisplaySelectedMeasurements } from '../hooks/useDislplaySelectedMeasurements';
 import { useMeasurements } from '../hooks/useMeasurements';
 import React from 'react';
+import { ScrollView } from 'react-native';
 
 const HomeScreen = () => {
   const {
@@ -32,58 +33,61 @@ const HomeScreen = () => {
   useMeasurements();
 
   return (
-    <Container>
-      <Row>
-        <MainInformationCard
-          data={allLiveSensorValues}
-          selectedMainLiveValue={sensorLiveValue}
-          stats={chartData}
-        />
-      </Row>
-      <CarsdWrapper>
-        <OtherCards>
-          <SmallInformationCardButton
-            selected={selectedDataType === DataTypeEnum.TEMPERATURE}
-            data={allLiveSensorValues?.temp}
-            name={DataTypeEnum.TEMPERATURE}
-            unit={`${'\u00B0'}C`}
-            onPress={() => handlePress(DataTypeEnum.TEMPERATURE)}
+    <ScrollView>
+      <Container>
+        <Row>
+          <MainInformationCard
+            data={allLiveSensorValues}
+            selectedMainLiveValue={sensorLiveValue}
+            stats={chartData}
           />
-          <SmallInformationCardButton
-            selected={selectedDataType === DataTypeEnum.HUMIDITY}
-            data={allLiveSensorValues?.humidity}
-            name={DataTypeEnum.HUMIDITY}
-            unit="%"
-            onPress={() => handlePress(DataTypeEnum.HUMIDITY)}
-          />
+        </Row>
+        <CarsdWrapper>
+          <OtherCards>
+            <SmallInformationCardButton
+              selected={selectedDataType === DataTypeEnum.TEMPERATURE}
+              data={allLiveSensorValues?.temp}
+              name={DataTypeEnum.TEMPERATURE}
+              unit={`${'\u00B0'}C`}
+              onPress={() => handlePress(DataTypeEnum.TEMPERATURE)}
+            />
+            <SmallInformationCardButton
+              selected={selectedDataType === DataTypeEnum.HUMIDITY}
+              data={allLiveSensorValues?.humidity}
+              name={DataTypeEnum.HUMIDITY}
+              unit="%"
+              onPress={() => handlePress(DataTypeEnum.HUMIDITY)}
+            />
 
-          <SmallInformationCardButton
-            selected={selectedDataType === DataTypeEnum.PRESSURE}
-            data={allLiveSensorValues?.pressure}
-            name={DataTypeEnum.PRESSURE}
-            unit="hPa"
-            onPress={() => handlePress(DataTypeEnum.PRESSURE)}
-          />
-          <SmallInformationCardButton
-            selected={selectedDataType === DataTypeEnum.GAS}
-            data={allLiveSensorValues?.gas}
-            name={DataTypeEnum.GAS}
-            onPress={() => handlePress(DataTypeEnum.GAS)}
-          />
-        </OtherCards>
-      </CarsdWrapper>
-    </Container>
+            <SmallInformationCardButton
+              selected={selectedDataType === DataTypeEnum.PRESSURE}
+              data={allLiveSensorValues?.pressure}
+              name={DataTypeEnum.PRESSURE}
+              unit="hPa"
+              onPress={() => handlePress(DataTypeEnum.PRESSURE)}
+            />
+            <SmallInformationCardButton
+              selected={selectedDataType === DataTypeEnum.GAS}
+              data={allLiveSensorValues?.gas}
+              name={DataTypeEnum.GAS}
+              onPress={() => handlePress(DataTypeEnum.GAS)}
+            />
+          </OtherCards>
+        </CarsdWrapper>
+      </Container>
+    </ScrollView>
   );
 };
 
 const Container = styled.View`
   flex: 1;
-  padding-top: 40px;
+  padding-top: 3x;
   background-color: #fce4e2;
+  /* height: 100%; */
 `;
 
 const Row = styled.View`
-  padding: 12px;
+  padding: 20px;
 `;
 
 const OtherCards = styled.View`
@@ -92,9 +96,10 @@ const OtherCards = styled.View`
 
 const CarsdWrapper = styled.View`
   background-color: #f2b9ab;
-  margin-top: 5px;
+  /* flex: 1; */
+  margin-top: 2px;
   border-radius: 30px;
-  padding: 25px 20px 20px 20px;
+  padding: 25px 25px 25px 25px;
 `;
 
 export default HomeScreen;
