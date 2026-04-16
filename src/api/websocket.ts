@@ -1,10 +1,9 @@
 import Toast from 'react-native-toast-message';
 import { MessageHandler } from '../types';
-import Config from 'react-native-config';
+import { API_BASE_URL_HOST } from '../config/env';
 
 const WS_URLS = [
-
-  `ws://${Config.API_BASE_URL}/ws`,
+  `ws://${API_BASE_URL_HOST}/ws`,
 ];
 const RETRY_BASE_DELAY_MS = 1000;
 const RETRY_MAX_DELAY_MS = 10000;

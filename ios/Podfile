@@ -16,6 +16,7 @@ end
 
 target 'air_quality_app' do
   config = use_native_modules!
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
 
   use_react_native!(
     :path => config[:reactNativePath],
